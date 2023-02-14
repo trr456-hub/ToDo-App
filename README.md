@@ -7,8 +7,8 @@
 
 ### Object.assign 예제
 
-    > const toDos = {}'''
-    < undefined'''
+    > const toDos = {}
+    < undefined
     > toDos[Date.now()] = {work:false}
     < {work: false}
     > toDos
