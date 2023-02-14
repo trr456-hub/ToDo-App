@@ -15,16 +15,38 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Fontisto } from "@expo/vector-icons";
 
 const STORAGE_KEY = "@toDos";
+const STATE_KEY = "@state";
 
 export default function App() {
   const [working, setWorking] = useState(true);
   const [text, setText] = useState("");
   const [toDos, setToDos] = useState({});
-  const travel = () => setWorking(false);
-  const work = () => setWorking(true);
+
+  // tap start
+  const travel = () => {
+    setWorking(false);
+    saveTab(false);
+  };
+  const work = () => {
+    setWorking(true);
+    saveTab(true);
+  };
+  const saveTab = async (toSave) => {
+    const newWorking = {
+      Working: toSave,
+    };
+    await AsyncStorage.setItem(STATE_KEY, JSON.stringify(newWorking));
+  };
+  const loadTab = async () => {
+    const s = await AsyncStorage.getItem(STATE_KEY);
+    s ? setWorking(JSON.parse(s).Working) : null;
+  };
+  // tab load
+
   const onChangeText = (event) => setText(event);
   const saveToDos = async (toSave) => {
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
+    // console.log(toSave);
   };
   const loadToDos = async () => {
     const s = await AsyncStorage.getItem(STORAGE_KEY);
@@ -47,6 +69,7 @@ export default function App() {
       {
         text: "확인",
         style: "destructive",
+        // onPress : 웹으로 따졌을때 onClick 와 같은것
         onPress: async () => {
           const newToDos = { ...toDos };
           delete newToDos[key];
@@ -60,6 +83,7 @@ export default function App() {
   };
   useEffect(() => {
     loadToDos();
+    loadTab();
   }, []);
   return (
     <View style={styles.container}>
