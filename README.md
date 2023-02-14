@@ -15,5 +15,7 @@
     < {1676355955658: {work: false}}
     > Object.assign({}, toDos, {[Date.now()]:{work:true}})
     < {1676355955658: {work: false}, 1676356208556: {work: true}}
-    
 ##### 오브젝트를 하나로 묶어줌
+
+### 비동기 처리
+#### npx expo install @react-native-async-storage/async-storage
