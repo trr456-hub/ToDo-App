@@ -6,7 +6,6 @@
 #### 그런 다음 새로운 Object 를 return 해준다.
 
 ### Object.assign 예제
-
     > const toDos = {}
     < undefined
     > toDos[Date.now()] = {work:false}
