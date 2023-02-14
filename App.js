@@ -6,6 +6,7 @@ import {
   View,
   TouchableOpacity,
   TextInput,
+  ScrollView,
 } from "react-native";
 import { theme } from "./color";
 
@@ -21,13 +22,10 @@ export default function App() {
       return;
     }
     //save to do
-    const newToDos = Object.assign({}, toDos, {
-      [Date.now()]: { text, work: working },
-    }); // 세개의 Object를 결합함
+    const newToDos = { ...toDos, [Date.now()]: { text, work: working } }; // 세개의 Object를 결합함
     setToDos(newToDos);
     setText("");
   };
-  console.log(toDos);
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -59,6 +57,13 @@ export default function App() {
           placeholder={working ? "할 일을 적어주세요." : "어디에 가고 싶나요?"}
           style={styles.input}
         />
+        <ScrollView>
+          {Object.keys(toDos).map((key) => (
+            <View style={styles.toDo} key={key}>
+              <Text style={styles.toDoText}>{toDos[key].text}</Text>
+            </View>
+          ))}
+        </ScrollView>
       </View>
     </View>
   );
@@ -85,7 +90,19 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 30,
-    marginTop: 20,
+    marginVertical: 20,
     fontSize: 18,
+  },
+  toDo: {
+    backgroundColor: theme.toDoBg,
+    marginBottom: 10,
+    paddingVertical: 20,
+    paddingHorizontal: 40,
+    borderRadius: 15,
+  },
+  toDoText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "500",
   },
 });
