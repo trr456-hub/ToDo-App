@@ -50,7 +50,9 @@ export default function App() {
   };
   const loadToDos = async () => {
     const s = await AsyncStorage.getItem(STORAGE_KEY);
-    setToDos(JSON.parse(s));
+    if (s) {
+      setToDos(JSON.parse(s));
+    }
     // console.log(JSON.parse(s))
     // parse === string을 javaScriptObj 로 만들어줌
   };
